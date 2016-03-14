@@ -10,12 +10,38 @@ and open the template in the editor.
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="author" content="Carlo Cabras">
-        <meta name="keyword" content="tennis, shop">
+        <meta name="keywords" content="tennis, shop">
     </head>
     <body>
-        <p> venditore </p>
+        <nav id="navigazioneSito">
+            <a href="descrizione.html"> Descrizione del sito </a>
+            <br/>
+            <a href="login.html"> Effettua il login </a>
+        </nav>
+        <br/>
         
-    <br/>
-    <a href="../index.html"> index.html </a>
+        <form action="venditore.html" method="post">
+            <label for="nome">Nome</label>
+            <input type="text" name="nome" id="nome" value="nome" />
+            <br />
+            <label for="urlimg">URL immagine descrittiva</label>
+            <input type="text" name="urlimg" id="urlimg" value="URL immagine" />
+            <br />
+            <label for="descrizione">Descrizione</label>
+            <textarea rows="6" cols="40" name="descrizione" id="descrizione">descrizione</textarea>
+            <br/>
+            <label for="prezzo">Prezzo</label>
+            <input type="text" name="prezzo" id="prezzo" value="0.00" />
+            <br />
+            <label for="disponibile">Quantit&agrave; disponibile</label>
+            <input type="number" name="disponibile" id="disponibile" value="0" />
+            <br />
+            <button type="reset">Reset</button>
+            <button type="submit">Accedi</button>
+        </form>
+        
+        <footer>
+            Created by Carlo Cabras
+        </footer>
     </body>
 </html>
