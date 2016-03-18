@@ -15,35 +15,28 @@ and open the template in the editor.
     <body>
         <nav id="navigazioneSito">
             <a href="descrizione.html"> Descrizione del sito </a>
-            <br/>
             <a href="login.html"> Effettua il login </a>
         </nav>
-        <br/>
+        <h1>Venditore</h1>
+        <p> Puoi aggiungere un oggetto che sar&agrave; successivamente venduto. </p>
         
-        <p> In questa pagina puoi aggiungere un oggetto che sar&agrave; successivamente venduto. </p>
-        
-        <form action="venditore.html" method="post">
+        <form method="POST">
             <label for="nome">Nome</label>
             <input type="text" name="nome" id="nome" value="nome" />
-            <br />
             <label for="urlimg">URL immagine descrittiva</label>
             <input type="text" name="urlimg" id="urlimg" value="URL immagine" />
-            <br />
             <label for="descrizione">Descrizione</label>
             <textarea rows="6" cols="40" name="descrizione" id="descrizione">descrizione</textarea>
-            <br/>
             <label for="prezzo">Prezzo</label>
             <input type="text" name="prezzo" id="prezzo" value="0.00" />
-            <br />
             <label for="disponibile">Quantit&agrave; disponibile</label>
             <input type="number" name="disponibile" id="disponibile" value="0" />
-            <br />
             <button type="reset">Reset</button>
             <button type="submit">Accedi</button>
         </form>
         
         <!--<footer>
-            Created by Carlo Cabras
+            Created by Carlo Cabras, carlocabras21@gmail.com
         </footer>-->
     </body>
 </html>
