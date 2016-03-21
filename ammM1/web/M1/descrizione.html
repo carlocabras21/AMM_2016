@@ -1,19 +1,4 @@
 <!DOCTYPE html>
-<!--
-Task 3
-Inserire all’interno della pagina descrizione.html una breve descrizione del sito di commercio elettronico 
-che si vuole implementare: 
-- quali oggetti possono essere messi in vendita 
-- le funzionalità a disposizione dei venditori 
-- le funzionalità a disposizione dei clienti. 
-Non è molto importante quello che scriverete, dovete creare:
-- un testo con una gerarchia di sezioni e titoli, che arrivi almeno al livello h3. 
-- sommario con link interni alle sezioni all’inizio della pagina. 
-
-Create una sezione di navigazione che permetta di raggiungere la pagina login.html. 
-
-Inserite le metainformazioni sulla pagina e validatela. 
--->
 
 <html>
     <head>
@@ -26,7 +11,7 @@ Inserite le metainformazioni sulla pagina e validatela.
     <body>
         <nav id="navigazioneSito">
             <a href="login.html"> Effettua il login </a>
-            <a href="../index.html"> Torna alla home </a>
+            <!--<a href="../index.html"> Torna alla home </a>-->
         </nav>
         
         <h1 id="descrizione"> Descrizione </h1>
@@ -40,49 +25,55 @@ Inserite le metainformazioni sulla pagina e validatela.
             </ol>
         </nav>
         
-        <h2 id="cosaVendiamo"> Cosa vendiamo </h2>
-        <ol>
-            <li> Abbigliamento
-                <ul>
-                    <li> Tute </li>
-                    <li> Pantaloni </li>
-                    <li> Shorts </li>
-                    <li> Magliette </li>
-                    <li> Felpe </li>
-                    <li> Scarpe </li>
-                </ul>
-            </li>
-            
-            <li> Racchette </li>
-            <li>  Palline </li>
-            <li> Accessori 
-                <ul>
-                    <li> Portachiavi </li>
-                    <li> Polsini </li>
-                    <li> Borsoni </li>
-                    <li> Corde </li>
-                </ul>
-            </li>
-        </ol>
+        <div>
+            <h2 id="cosaVendiamo"> Cosa vendiamo </h2>
+            <ol>
+                <li> Abbigliamento
+                    <ul>
+                        <li> Tute </li>
+                        <li> Pantaloni </li>
+                        <li> Shorts </li>
+                        <li> Magliette </li>
+                        <li> Felpe </li>
+                        <li> Scarpe </li>
+                    </ul>
+                </li>
+
+                <li> Racchette </li>
+                <li>  Palline </li>
+                <li> Accessori 
+                    <ul>
+                        <li> Portachiavi </li>
+                        <li> Polsini </li>
+                        <li> Borsoni </li>
+                        <li> Corde </li>
+                    </ul>
+                </li>
+            </ol>
+        </div>
         
-        <h2 id="funzionalitaCliente"> Cosa pu&ograve; fare il cliente </h2>
-        <h3> Comprare </h3>
-        <p> Il cliente pu&ograve; sfogliare tra gli oggetti e scegliere cosa mettere
-            nel carrello per poter poi procedere agli acquisti. </p>
-            
-        <h3> Ricaricare </h3>
-        <p> Il cliente pu&ograve; ricaricare la sua carta di credito virtuale. </p>
+        <div>
+            <h2 id="funzionalitaCliente"> Cosa pu&ograve; fare il cliente </h2>
+            <h3> Comprare </h3>
+            <p> Il cliente pu&ograve; sfogliare tra gli oggetti e scegliere cosa mettere
+                nel carrello per poter poi procedere agli acquisti. </p>
+
+            <h3> Ricaricare </h3>
+            <p> Il cliente pu&ograve; ricaricare la sua carta di credito virtuale. </p>
+        </div>
         
-        <h2 id="funzionalitaVenditore"> Cosa pu&ograve; fare il venditore </h2>
-        <h3> Vendere </h3>
-        <p> Il venditore pu&ograve; vendere i propri oggetti.</p>
+        <div>
+            <h2 id="funzionalitaVenditore"> Cosa pu&ograve; fare il venditore </h2>
+            <h3> Vendere </h3>
+            <p> Il venditore pu&ograve; vendere i propri oggetti.</p>
+
+            <h3> Inserire o rimuovere </h3>
+            <p> Il venditore pu&ograve; a suo piacimento aggiungere oggetti nuovi e toglierne
+                se vecchi o esauriti. </p>
+        </div>
         
-        <h3> Inserire o rimuovere </h3>
-        <p> Il venditore pu&ograve; a suo piacimento aggiungere oggetti nuovi e toglierne
-            se vecchi o esauriti. 
-    
-    <!--<footer>
-        Created by Carlo Cabras, carlocabras21@gmail.com
-    </footer>-->
+        <footer>
+            Created by Carlo Cabras, carlocabras21@gmail.com
+        </footer>
     </body>
 </html>
