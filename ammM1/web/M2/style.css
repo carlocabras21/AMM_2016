@@ -8,3 +8,57 @@ and open the template in the editor.
     Author     : Carlo
 */
 
+body{
+    background-color: #C5DDF6;
+    color: 0D1C28;
+    font-family: Tahoma, Geneva, sans-serif;
+}
+
+h1{
+    color: #213034;
+    font-size: 230%;
+}
+h2{
+    color: #213034;
+    font-size: 190%;
+}
+h3{
+    color: #213034;
+    font-size: 150%;
+}
+h4, h5, h6{
+    color: #213034;
+}
+
+a:link, a:visited{
+    color: #162127; 
+}
+a:hover{
+    background-color: #CDE0E3;
+}
+
+/*input, textarea{
+    display: block;
+}*/
+label{
+    display: block;
+}
+label:after{
+    display: inline;
+}
+
+input[type=text]:focus {
+    border: 3px solid #555;
+}
+input[type=password]:focus {
+    border: 3px solid #555;
+}
+
+
+footer{
+    color: grey;
+    font-size: 75%;
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+}
