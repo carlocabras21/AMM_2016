@@ -10,28 +10,55 @@
         <link rel="stylesheet" type="text/css" href="style.css" media="screen">
     </head>
     <body>
-        <nav id="navigazioneSito">
-            <a href="descrizione.html"> Descrizione del sito </a>
-            <a href="login.html"> Effettua il login </a>
-        </nav>
-        <h1>Venditore</h1>
-        <p> Puoi aggiungere un oggetto che sar&agrave; successivamente venduto. </p>
+        <header>
+            <nav class="headerNav">
+                <ul>
+                    <li><a href="descrizione.html">Descrizione del sito </a></li>
+                    <li><a href="login.html">Effettua il login </a></li>
+                </ul>
+            </nav>
+            <h1>Venditore</h1>
+        </header>
         
-        <form class="form" method="POST">
-            <label for="nome">Nome</label>
-            <input type="text" name="nome" id="nome" value="nome" />
-            <label for="urlimg">URL immagine descrittiva</label>
-            <input type="text" name="urlimg" id="urlimg" value="URL immagine" />
-            <label for="descrizione">Descrizione</label>
-            <textarea rows="6" cols="40" name="descrizione" id="descrizione">descrizione</textarea>
-            <label for="prezzo">Prezzo</label>
-            <input type="text" name="prezzo" id="prezzo" value="0.00" />
-            <label for="disponibile">Quantit&agrave; disponibile</label>
-            <input type="number" name="disponibile" id="disponibile" value="0" min="0"/>
-            <button type="reset">Reset</button>
-            <button type="submit">Accedi</button>
-        </form>
+        <aside class="sezioneLateraleDestra">
+            sezione laterale in manutenzione
+        </aside>
+        <aside class="sezioneLateraleSinistra">
+            sezione laterale in manutenzione
+        </aside>
         
+        <div class="content">
+            <p> Puoi aggiungere un oggetto che sar&agrave; successivamente venduto. </p>
+
+            <div class="form">
+                <form method="POST">
+                    <div>
+                        <label for="nome">Nome</label>
+                        <input type="text" name="nome" id="nome" value="nome" />
+                    </div>
+                    <div>
+                        <label for="urlimg">URL immagine descrittiva</label>
+                        <input type="text" name="urlimg" id="urlimg" value="URL immagine" />
+                    </div>
+                    <div>
+                        <label for="descrizione">Descrizione</label>
+                        <textarea rows="6" cols="40" name="descrizione" id="descrizione">descrizione</textarea>
+                    </div>
+                    <div>
+                        <label for="prezzo">Prezzo</label>
+                        <input type="text" name="prezzo" id="prezzo" value="0.00" />
+                    </div>
+                    <div>
+                        <label for="disponibile">Quantit&agrave; disponibile</label>
+                        <input type="number" name="disponibile" id="disponibile" value="0" min="0"/>
+                    </div>
+                    <div class="buttons">
+                        <input type="reset" value="Reset" />
+                        <input type="submit" value="Invia" />
+                    </div>
+                </form>
+            </div>
+        </div>
         <footer>
             Created by Carlo Cabras, carlocabras21@gmail.com
         </footer>

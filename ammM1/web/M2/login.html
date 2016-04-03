@@ -10,22 +10,42 @@
         <link rel="stylesheet" type="text/css" href="style.css" media="screen">
     </head>
     <body>
-        <nav id="navigazioneSito">
-            <a href="descrizione.html"> Descrizione del sito </a>
-            <a href="cliente.html"> Pagina dedicata al cliente </a>
-            <a href="venditore.html"> Pagina dedicata al venditore </a>
-        </nav>
-        <h1>Login</h1>
-        <p>Effettua il login</p>
-        <form method="POST">
-            <label for="user">Username</label>
-            <input type="text" name="user" id="user" value="username" />
-            <label for="psw"> Password </label>
-            <input type="password" name="psw" id="psw" value="password" />
-            <button type="reset">Reset</button>
-            <button type="submit">Accedi</button>
-        </form>
+        <header>
+            <nav class="headerNav">
+                <ul>
+                    <li><a href="descrizione.html">Descrizione del sito </a></li>
+                    <li><a href="cliente.html">Pagina dedicata al cliente </a></li>
+                    <li><a href="venditore.html">Pagina dedicata al venditore </a></li>
+                </ul>
+            </nav>
+            <h1>Login</h1>
+        </header>
         
+        <aside class="sezioneLateraleDestra">
+            sezione laterale in manutenzione
+        </aside>
+        <aside class="sezioneLateraleSinistra">
+            sezione laterale in manutenzione
+        </aside>
+        
+        <div class="content">
+            <div class="form">
+                <form method="POST">
+                    <div class="block">
+                        <label for="user">Username</label>
+                        <input type="text" name="user" id="user" value="username" />
+                    </div>
+                    <div class="block">
+                        <label for="psw"> Password </label>
+                        <input type="password" name="psw" id="psw" value="password" />
+                    </div>
+                    <div class="buttons">
+                        <input type="reset" value="Reset" />
+                        <input type="submit" value="Accedi" />
+                    </div>
+                </form>
+            </div>
+        </div>
         <footer>
             Created by Carlo Cabras, carlocabras21@gmail.com
         </footer>
