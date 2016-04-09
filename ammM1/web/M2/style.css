@@ -18,7 +18,7 @@ a:link, a:visited{
     color: #162127; 
 }
 a:hover{
-    background-color: #CDE0E3;
+    font-weight: bold;
 }
 
 header nav{
@@ -43,13 +43,14 @@ header nav ul{ /* proprietà pannello navigazione in alto della pagina*/
 }
 
 header nav li{
-    float: left;
+    display:inline;
     margin: 0;
+    overflow: hidden;
     border-right: 1px solid whitesmoke;
 }
 
-header nav li>a { /* proprietà link navigazione */
-    display: block; 
+.headerNav li>a { /* proprietà link navigazione */
+    /*display: block; */
     color: white;
     text-align: center;
     padding: 14px 16px;
@@ -90,6 +91,10 @@ h4, h5, h6{
     color: #213034;
 }
 
+.content a:link, a:visited{
+    color: #162127; 
+}
+
 form{ /*specifiche per i form */
     /*border: 1px solid black;*/
     padding: 2%;
@@ -118,7 +123,7 @@ textarea{
     resize: none;
 }
 input[type=submit], input[type=reset] {
-    width: 20%;
+    width: initial; /* non so perché mi dia errore */
     display: inline-block;
     position: relative;
     left: 30%;
@@ -128,7 +133,7 @@ input[type=submit], input[type=reset] {
     padding: 1%;
     text-decoration: none;
     margin: 1%;
-    /*cursor: pointer;*/
+    cursor: pointer;
 }
 input[type=submit]{ /*specifiche per il bottone "submit" */
     font-size: 1.2em;
@@ -138,6 +143,7 @@ input[type=submit]{ /*specifiche per il bottone "submit" */
 html, body{ /*usato per far funzionare le dimensioni di table*/
     width: 100%;
     height: 100%;
+    margin: 0px;
 }
 
 table{
@@ -180,7 +186,7 @@ aside{
     color: whitesmoke;
     width: 10%;
     padding: 1em;
-    height: 50%;
+    height: 75%;
 }
 
 .sezioneLateraleDestra{
@@ -190,43 +196,16 @@ aside{
     float: left;
 }
 
-
-
 footer{ 
-    /*
-        la mia intenzione era di mantenere il footer in fondo alla pagina ma non fissato,
-        in modo che riultasse:
-        - dopo il testo nel caso di pagine lunghe (es. descrizione.html)
-        - in fondo alla pagina in caso di pagine corte (es. login.html)
-        purtroppo non ci sono riuscito.
-    */
-    display: none;
-    /*background-color:  #0D1C28;
+    background-color:  #0D1C28;
     color: grey;
     font-size: 0.75em;
     text-align: center;
     
-    position: relative;
-    bottom: 0px;
-    left: 2%;
     height: 1.5em;
     width: 100%;
     overflow:hidden;
-    margin-top: -1.5m;*/
 }
-
-/*
-.mantieniFooterInBasso{
-    min-height: 50%;
-    bottom: 1.5em;
-  /* equal to footer height 
-    margin-bottom: -1.5em;
-}
-.mantieniFooterInBasso:after {
-  content: "";
-  display: block;
-}*/
-
 
 @media only screen and (min-width:480px) and (max-width:1024px){
      /* sparisce la barra destra */
@@ -236,10 +215,10 @@ footer{
     
     /* ingrandisco barra sinistra */
     .sezioneLateraleSinistra{
-        width: 15%;
+        /*width: 15%;*/
     }
     .content{
-        margin-left: 17%;
+        margin-left: 20%;
         margin-right: 0;
     }
 }
@@ -254,12 +233,19 @@ footer{
     .content, form, table{
         width: 100%;
         margin-left: 0;
+        margin-right: 0;
     }
     
-    header nav ul{
+    .headerNav ul{
+        width:100%;
+    }
+    
+    .headerNav li{
+        display:block;
+        /*width: 100%;*/
         float: bottom;
-        list-style-type: none;
-        display: block;
-        font-size: 1em;
+        text-align: center;
+        padding-top: 10px;
+        padding-bottom: 10px;
     }
 }
