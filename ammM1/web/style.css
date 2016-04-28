@@ -1,0 +1,267 @@
+
+/* 
+    Created on : 29-mar-2016, 10.41.22
+    Author     : Carlo
+*/
+
+/*
+    siti usati:
+    https://coolors.co/app/cde0e3-162127-0d1c28-7ea0b7-597081
+    http://snook.ca/technical/colour_contrast/colour.html#fg=36494E,bg=C5DDF6
+    http://www.colorsontheweb.com/colorwizard.asp
+    http://www.w3schools.com/cssref/css_websafe_fonts.asp
+    http://www.w3schools.com/css/css_form.asp
+    http://codicicolori.com/codici-colori-rgb
+*/
+
+a:link, a:visited{
+    color: #162127; 
+}
+a:hover{
+    font-weight: bold;
+}
+
+header nav{
+    color: whitesmoke;
+    font-family: Helvetica;
+}
+
+header{
+    top: 0px;
+    left: 0px;
+    background-color: #0D1C28;
+    color: whitesmoke;
+    /*position:fixed;*/
+}
+
+header nav ul{ /* proprietà pannello navigazione in alto della pagina*/ 
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #26313D;
+}
+
+header nav li{
+    display:inline;
+    margin: 0;
+    overflow: hidden;
+    border-right: 1px solid whitesmoke;
+}
+
+.headerNav li>a { /* proprietà link navigazione */
+    /*display: block; */
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+header nav li>a:hover {
+    background-color: black;
+}
+
+header nav li>a:link,a:visited {
+    color: whitesmoke;
+}
+
+header h1{
+    color: whitesmoke;
+}
+
+body{
+    background-color: #C5DDF6;
+    color: #0D1C28;
+    font-family: Tahoma, Geneva, sans-serif;
+}
+
+h1{
+    color: #213034;
+    font-size: 230%;
+}
+h2{
+    color: #213034;
+    font-size: 190%;
+}
+h3{
+    color: #213034;
+    font-size: 150%;
+}
+h4, h5, h6{
+    color: #213034;
+}
+
+.content a:link, a:visited{
+    color: #162127; 
+}
+
+form{ /*specifiche per i form */
+    /*border: 1px solid black;*/
+    padding: 2%;
+    width: 40%;
+    margin: 0 auto;
+    text-align: left;
+}
+label:after{
+    content: " ";
+    display: block;
+}
+label{
+    display: block;
+}
+input{
+    display: block;
+    margin-bottom: 3%;
+}
+input, textarea{
+    width: 100%;
+}
+input:focus ,textarea:focus{
+    border: 3px solid #0D1C28;
+}
+textarea{
+    resize: none;
+}
+input[type=submit], input[type=reset] {
+    width: initial; /* non so perché mi dia errore */
+    display: inline-block;
+    position: relative;
+    left: 30%;
+    background-color: #0D1C28;
+    border: none;
+    color: white;
+    padding: 1%;
+    text-decoration: none;
+    margin: 1%;
+    cursor: pointer;
+}
+input[type=submit]{ /*specifiche per il bottone "submit" */
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+html, body{ /*usato per far funzionare le dimensioni di table*/
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+}
+
+table{
+    margin: 0 auto;
+    position: relative;
+    top: 0px;
+    left: 0px;
+    width: 70%;
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+tr:nth-child(even) {
+    background-color: #D2D2D2;
+}
+tr:nth-child(odd) {
+    background-color: whitesmoke;
+}
+th{
+    font-weight: bold;
+    background-color: #0D1C28;
+    color: white;
+    padding: 1%;
+}
+table a:link, table a:visited{
+    color: #162127; 
+}
+tr, th{
+    border: 1px solid black;
+    text-align: center;
+}
+
+.content{
+    /* margini usati per far non far andare il content sotto le sezioni laterali */
+    margin-left: 12%;
+    margin-right: 12%;
+}
+
+
+
+.linkButton { 
+     background: none;
+     border: none;
+     color: #0066ff;
+     text-decoration: underline;
+     cursor: pointer; 
+     font-size: 100%;
+     font-weight:initial;
+}
+aside{
+    background-color: #3d4952;
+    color: whitesmoke;
+    width: 10%;
+    padding: 1em;
+    height: 75%;
+}
+
+.sezioneLateraleDestra{
+    float: right;
+}
+.sezioneLateraleSinistra{
+    float: left;
+}
+
+.error{
+    color: #FF0000;
+    font-weight: bold;
+}
+
+footer{ 
+    background-color:  #0D1C28;
+    color: grey;
+    font-size: 0.75em;
+    text-align: center;
+    
+    height: 1.5em;
+    width: 100%;
+    overflow:hidden;
+}
+
+@media only screen and (min-width:480px) and (max-width:1024px){
+     /* sparisce la barra destra */
+    .sezioneLateraleDestra{
+        display: none;
+    }
+    
+    /* ingrandisco barra sinistra */
+    .sezioneLateraleSinistra{
+        /*width: 15%;*/
+    }
+    .content{
+        margin-left: 20%;
+        margin-right: 0;
+    }
+}
+
+@media only screen and (max-width:480px){
+    /* spariscono entrambe le sezioni laterali */
+    .sezioneLateraleDestra, .sezioneLateraleSinistra{
+        display: none;
+    }
+    
+    /* contenuti con ampiezza a tutto schermo */
+    .content, form, table{
+        width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+    }
+    
+    .headerNav ul{
+        width:100%;
+    }
+    
+    .headerNav li{
+        display:block;
+        /*width: 100%;*/
+        float: bottom;
+        text-align: center;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+}
