@@ -71,7 +71,7 @@
                     </div>
                 </div>
             </c:when>
-            <c:when test="${sessionScope['oggettoAggiunto'] == true}">
+            <c:when test="${requestScope['oggettoAggiunto'] == true}">
                 <p>Oggetto Aggiunto! Caratteristiche: </p>
                 <div class="content">
                     <table>
@@ -107,6 +107,11 @@
                 <div class="form">
                     <form method="POST" action="Venditore">
                         <div>
+                             <c:if test="${requestScope['nomeVuoto'] == true}">
+                                <div class="error">
+                                    Il campo "Nome" non può essere vuoto.
+                                </div>
+                            </c:if>
                             <label for="nome">Nome</label>
                             <input type="text" name="nome" id="nome" value="nome" />
                         </div>
@@ -119,7 +124,7 @@
                             <textarea rows="6" cols="40" name="descrizione" id="descrizione">descrizione</textarea>
                         </div>
                         <div>
-                             <c:if test="${param['prezzoSbagliato'] == true}">
+                             <c:if test="${requestScope['prezzoSbagliato'] == true}">
                                 <div class="error">
                                     Il campo "Prezzo" deve contenere solo numeri. Usa il punto come separatore tra interi e decimali.
                                 </div>
@@ -129,6 +134,11 @@
                             <input type="text" name="prezzo" id="prezzo" value="0.00" />
                         </div>
                         <div>
+                             <c:if test="${requestScope['quantitaSbagliata'] == true}">
+                                <div class="error">
+                                    Il campo "Quantit&agrave;" deve contenere un numero intero >0.
+                                </div>
+                            </c:if>
                             <label for="disponibile">Quantit&agrave; disponibile</label>
                             <input type="number" name="disponibile" id="disponibile" value="1" min="1"/>
                         </div>

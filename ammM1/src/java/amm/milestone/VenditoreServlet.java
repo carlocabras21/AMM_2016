@@ -42,38 +42,58 @@ public class VenditoreServlet extends HttpServlet {
         HttpSession session = request.getSession(false);
         
         if(request.getParameter("Submit") != null){ //se hanno premuto il tasto di aggiunta oggetto
-            Double prezzo; //usato per recuperare il prezzo inserito ed effettuarci il controllo
             /*
-                la variabile "error" verrà accodata al link per la redirezione, se non ci sono errori
-                allora il link rimarrà invariato, altrimenti ci sarà la stringa contenente l'errore
+                imposto questa variabile a true: se essa non sarà modiicata durante la ricerca degli errori,
+                allora sarà salvato il fatto che l'oggetto è stato aggiunto.
             */
-            String error = new String(""); 
+            request.setAttribute("oggettoAggiunto", true);  
             
-            //variabile necessaria per far funzionare il messaggio in venditore.jsp
-            //session.setAttribute("venditoreLoggedIn", true); //magata per correggere errori, non dovrebbe essere più necessaria
+            TennisObjectSale nuovoOggetto = new TennisObjectSale(); //creo nuovo oggetto dove caricare i dati
             
-            //creo nuovo oggetto e ci carico i dati
-            TennisObjectSale nuovoOggetto = new TennisObjectSale();
-            nuovoOggetto.setDescrizione(request.getParameter("descrizione"));
-            nuovoOggetto.setNome(request.getParameter("nome"));
-            nuovoOggetto.setQuantitaDisponibile(Integer.parseInt(request.getParameter("disponibile")));
+            //VALIDAZIONE DELL'INPUT: in caso di errore accodo la stringa con i parametri d'errore che saranno poi letti da venditore.jsp
             
-            /*
-                Il metodo boolean matches(String regex) della classe String 
-                restituisce true se la stringa rispetta l'espressione regolare.
-                La userò per validare l'input del prezzo
-            */
-            if ( ((request.getParameter("prezzo")).matches("[0-9]*\\.?[0-9]*"))==false ) 
-                error += "?prezzoSbagliato=true";
-            else {
-                nuovoOggetto.setPrezzo(Double.parseDouble(request.getParameter("prezzo")));            
-                request.setAttribute("nuovoOggetto", nuovoOggetto);
-                //imposto a true la seguente variabile, usata in venditore.jsp per stampare il messaggio
-                session.setAttribute("oggettoAggiunto", true);
+            //VALIDAZIONE NOME
+            if ( (request.getParameter("nome")).equals("")==true ){  //il nome non può essere vuoto
+                request.setAttribute("nomeVuoto", true); //nel caso fosse vuoto, imposto la variabile a true segnalando così l'errore nella pagina del venditore
+                request.setAttribute("oggettoAggiunto", false); //la imposto a false così più avanti non salvo l'oggetto aggiunto in quanto i dati non sono corretti
+            }
+            else{
+                request.setAttribute("nomeVuoto", false); //imposto la variabile a false per evitare future riletture di un eventuale valore true
+                nuovoOggetto.setNome(request.getParameter("nome")); //salvo il nome
             }
             
-            //redirezione con eventuale stringa di errore
-            request.getRequestDispatcher("venditore.jsp"+error).forward(request, response);
+            nuovoOggetto.setDescrizione(request.getParameter("descrizione")); //la descrizione può anche essere vuota
+            
+            //VALIDAZIONE QUANTITA' DISPONIBILE
+             /* Il metodo boolean matches(String regex) della classe String 
+                restituisce true se la stringa rispetta l'espressione regolare.
+                La userò per validare l'input della quantita e del prezzo */
+            if ( ((request.getParameter("disponibile")).matches("[1-9][0-9]*"))==false ){ //la quantità dev'essere un numero >0
+                request.setAttribute("quantitaSbagliata", true);
+                request.setAttribute("oggettoAggiunto", false); 
+            }
+            else{
+                request.setAttribute("quantitaSbagliata", false);
+                nuovoOggetto.setQuantitaDisponibile(Integer.parseInt(request.getParameter("disponibile")));
+            }
+
+            //VALIDAZIONE PREZZO
+            if ( ((request.getParameter("prezzo")).matches("[0-9]*\\.?[0-9]*"))==false ){ //il prezzo dev'essere un numero, anche senza la virgola va bene
+                request.setAttribute("prezzoSbagliato", true);
+                request.setAttribute("oggettoAggiunto", false); 
+            }
+            else {
+                nuovoOggetto.setPrezzo(Double.parseDouble(request.getParameter("prezzo")));   
+                request.setAttribute("prezzoSbagliato", false);
+                request.setAttribute("nuovoOggetto", nuovoOggetto);
+            }
+            
+            //se oggettoAggiunto è true vuol dire che non ci sono stati errori nell'invio dei dati, posso salvare l'oggetto
+            if ((boolean)request.getAttribute("oggettoAggiunto")==true)
+                request.setAttribute("nuovoOggetto", nuovoOggetto);
+
+            
+            request.getRequestDispatcher("venditore.jsp?").forward(request, response); //redirezione
         }
     }
 
