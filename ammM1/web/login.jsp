@@ -24,7 +24,7 @@
             <nav class="headerNav">
                 <ul>
                     <li><a href="descrizione.jsp">Descrizione</a></li>
-                    <li><a href="cliente.htm">Per il cliente</a></li>
+                    <li><a href="cliente.html">Per il cliente</a></li>
                     <li><a href="venditore.html">Per il venditore</a></li>
                 </ul>
             </nav>
@@ -45,7 +45,7 @@
         
         <div class="content">
             <div class="form">
-                <form method="POST" action="Login">
+                <form method="POST" action="login.html">
                     <div class="block">
                         <label for="user">Username</label>
                         <input type="text" name="Username" id="user" value="username" />

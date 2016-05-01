@@ -105,7 +105,7 @@
                 <p> Puoi aggiungere un oggetto che sar&agrave; successivamente venduto. </p>
 
                 <div class="form">
-                    <form method="POST" action="Venditore">
+                    <form method="POST" action="venditore.html">
                         <div>
                              <c:if test="${requestScope['nomeVuoto'] == true}">
                                 <div class="error">

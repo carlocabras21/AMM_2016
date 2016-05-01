@@ -95,7 +95,7 @@
                                     </td>
                                     <td>${param['prezzo']}</td>
                                     <td>
-                                        <form method="POST" action="Compra">
+                                        <form method="POST" action="cliente.html">
                                             <input type="hidden" name="nome" value="${param['nome']}">
                                             <input type="hidden" name="img" value="${param['img']}">
                                             <input type="hidden" name="prezzo" value="${param['prezzo']}">
@@ -107,7 +107,30 @@
                             </table>
                         </div>
                     </c:when> 
-                    
+                    <c:when test="${param['confermato'] == true}"> <!-- se è true, stampo il riepilogo dell'oggetto -->
+                        <p>Acquisto CONFERMATO!</p>
+                        <h3>Riepilogo oggetto:</h3>
+                        <table>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Foto</th>
+                                <th>Prezzo</th>
+                            </tr>
+                            <tr>
+                                <td>${param['nome']}</td>
+                                <td>
+                                    <img title="${param['nome']}" 
+                                         alt="foto di ${param['nome']}" 
+                                         src="${param['img']}" 
+                                         width="100" height="100">
+                                </td>
+                                <td>${param['prezzo']}</td>
+                            </tr>
+                        </table>
+                    </c:when>
+                    <c:when test="${param['confermato'] == false}"> <!-- se è false, stampo un messaggio d'errore -->
+                        <p>Acquisto non completato, il tuo saldo non &egrave; sufficiente.</p>
+                    </c:when>
                     <c:otherwise>
                         <div class="content">
                             <p> Puoi scegliere che oggetto aggiungere al carrello per poi comprarlo. </p>

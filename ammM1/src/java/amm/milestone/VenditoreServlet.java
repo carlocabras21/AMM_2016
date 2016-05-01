@@ -19,7 +19,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Carlo
  */
-@WebServlet(name = "VenditoreServlet", urlPatterns = {"/Venditore"})
+@WebServlet(name = "VenditoreServlet", urlPatterns = {"/venditore.html"})
 public class VenditoreServlet extends HttpServlet {
 
     /**
@@ -91,10 +91,10 @@ public class VenditoreServlet extends HttpServlet {
             //se oggettoAggiunto è true vuol dire che non ci sono stati errori nell'invio dei dati, posso salvare l'oggetto
             if ((boolean)request.getAttribute("oggettoAggiunto")==true)
                 request.setAttribute("nuovoOggetto", nuovoOggetto);
-
-            
-            request.getRequestDispatcher("venditore.jsp?").forward(request, response); //redirezione
         }
+        
+        request.getRequestDispatcher("venditore.jsp?").forward(request, response); //redirezione
+            
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

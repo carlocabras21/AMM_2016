@@ -18,7 +18,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Carlo
  */
-@WebServlet(name = "Login", urlPatterns = {"/Login"})
+@WebServlet(name = "Login", urlPatterns = {"/login.html"})
 public class Login extends HttpServlet {
 
     /**
@@ -58,9 +58,9 @@ public class Login extends HttpServlet {
                     session.setAttribute("cliente", u);//metto nell'attributo "cliente" della sessione i dati del cliente loggato
                     request.setAttribute("cliente", u);//metto nell'attributo "cliente" i dati del cliente loggato
                     session.setAttribute("oggetti", listaOggetti);//metto in "oggetti" la lista degli oggetti
-                    request.getRequestDispatcher("cliente.htm").forward(request, response);
-                    //rimando a cliente.htm che sarà letto dalla servlet
-                    //ho usato .htm perché .html mi dava problemi, il build falliva
+                    //request.getRequestDispatcher("cliente.jsp").forward(request, response);
+                    response.sendRedirect("cliente.html");
+                    //rimando a cliente.html che sarà letto dalla servlet
                 }               
             }
             
@@ -68,34 +68,37 @@ public class Login extends HttpServlet {
             //stesso funzionamento del caso del cliente
             ArrayList<Venditore> listaVenditori = VenditoreFactory.getInstance().getVenditoriList();
             for (Venditore u : listaVenditori){
-                if (u.getUsr().equals(username) &&u.getPsw().equals(password)){
+                if (u.getUsr().equals(username) && u.getPsw().equals(password)){
                     session.setAttribute("loggedIn", true);
                     session.setAttribute("venditoreLoggedIn", true);
                     autenticazioneRiuscita=true;
                     session.setAttribute("id", u.getCodiceFiscale());
                     request.setAttribute("venditore", u);
                     session.setAttribute("venditore", u);
-                    request.getRequestDispatcher("venditore.jsp").forward(request, response);
+                    //request.getRequestDispatcher("venditore.html").forward(request, response);
+                    response.sendRedirect("venditore.html");
                 }               
             }
             
+            //se sono qua è perché l'autenticazione è fallita e non c'è stata alcuna redirezione verso le pagine del cliente/venditore
+            if (autenticazioneRiuscita==false){
+                //setto a false tutte le variabili che tengono conto degli utenti loggati
+                /*
+                    essendo settate a false, vuol dire che ci hanno provato ma non ci sono riusciti => autenticazione fallita
+                    se invece neanche ci provano, il parametro non viene creato e la sua ricerca mi darà null,
+                    distimguendo i casi di autenticazione fallita e non effettuata
+                */
+                session.setAttribute("clienteLoggedIn", false);                   
+                session.setAttribute("venditoreLoggedIn", false);
+                session.setAttribute("loggedIn", false);
+
+                //rimando a login.jsp con la variabile che mi permette di stampare un messaggio di errore
+                request.getRequestDispatcher("login.jsp?autenticazioneFallita=true").forward(request, response);
+            }
         }
         
-        //se sono qua è perché l'autenticazione è fallita e non c'è stata alcuna redirezione verso le pagine del cliente/venditore
-        if (autenticazioneRiuscita==false){
-            //setto a false tutte le variabili che tengono conto degli utenti loggati
-            /*
-                essendo settate a false, vuol dire che ci hanno provato ma non ci sono riusciti => autenticazione fallita
-                se invece neanche ci provano, il parametro non viene creato e la sua ricerca mi darà null,
-                distimguendo i casi di autenticazione fallita e non effettuata
-            */
-            session.setAttribute("clienteLoggedIn", false);                   
-            session.setAttribute("venditoreLoggedIn", false);
-            session.setAttribute("loggedIn", false);
-
-            //rimando a login.jsp con la variabile che mi permette di stampare un messaggio di errore
-            request.getRequestDispatcher("login.jsp?autenticazioneFallita=true").forward(request, response);
-        }
+        else 
+            request.getRequestDispatcher("login.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

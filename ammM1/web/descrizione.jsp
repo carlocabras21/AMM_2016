@@ -20,7 +20,7 @@
         <header>
             <nav class="headerNav">
                 <ul>
-                    <li><a href="login.jsp">Login</a></li>
+                    <li><a href="login.html">Login</a></li>
                     <!--<a href="../index.html"> Torna alla home </a>-->
                 </ul>
             </nav>
