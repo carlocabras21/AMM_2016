@@ -43,7 +43,7 @@
             <nav  class="headerNav">
                 <ul>
                     <li><a href="descrizione.jsp">Descrizione</a></li>
-                    <li><a href="login.jsp">Login</a></li>
+                    <li><a href="login.html">Login</a></li>
                 </ul>
             </nav>
             <h1>Cliente</h1>

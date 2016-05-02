@@ -93,6 +93,7 @@ public class VenditoreServlet extends HttpServlet {
                 request.setAttribute("nuovoOggetto", nuovoOggetto);
         }
         
+        //nessun bottone è stato premuto, rimando semplicemente a venditore.jsp
         request.getRequestDispatcher("venditore.jsp?").forward(request, response); //redirezione
             
     }

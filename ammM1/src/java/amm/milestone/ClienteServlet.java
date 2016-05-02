@@ -58,7 +58,8 @@ public class ClienteServlet extends HttpServlet {
                 request.getRequestDispatcher("cliente.jsp?confermato=false").forward(request, response);
             }
         }
-
+        
+        //non è stato premuto alcun submit di conferma, semplicemente rimando a cliente.jsp
         request.getRequestDispatcher("cliente.jsp").forward(request, response);//rimando a cliente.jsp
     }
 

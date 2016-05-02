@@ -11,21 +11,21 @@
                  
                  non mi fa scrivere commenti all'interno del <c:choose>, li scriverò qua:
                  
-                 riga 43:
+                 riga 59:
                     Uso il parametro passato via URL "venditoreLoggedIn" che può avere 3 valori:
                     - true: l'autenticazione del cliente è andata a buob fine
                     - false: si è autenticato un cliente, in quanto al momento del login setto questa variabile a false
                     - null: non si è autenticato nessuno
                 
-                riga 67:
+                riga 74:
                     Uso il parametro "oggettoAggiunto" per stampare il riepilogo dell'oggetto nel caso esso sia true
 
                 riga 100:
                     form invio nuovo oggetto
 
-                riga 122:
-                    Uso il parametro "prezzoSbagliato" per segnalare all'utente il caso in cui esso inserisca
-                    il prezzo in un formato sbagliato.
+                riga 107 in poi:
+                    Uso il parametro "<attributo>Sbagliato" per segnalare all'utente il caso in cui esso inserisca
+                    un campo in un formato sbagliato
 
 --%>
 
@@ -48,7 +48,7 @@
             <nav class="headerNav">
                 <ul>
                     <li><a href="descrizione.jsp">Descrizione</a></li>
-                    <li><a href="login.jsp">Login </a></li>
+                    <li><a href="login.html">Login </a></li>
                 </ul>
             </nav>
             <h1>Venditore</h1>
