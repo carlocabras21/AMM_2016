@@ -10,6 +10,7 @@ package amm.milestone;
  * @author Carlo
  */
 public class Cliente {
+    private int id;
     private String usr;
     private String psw;
     private String nome;
@@ -124,6 +125,14 @@ public class Cliente {
      */
     public void setSaldo(Saldo saldo) {
         this.saldo = saldo;
+    }
+
+    void setId(int id) {
+        this.id = id;
+    }
+    
+    int getId(){
+        return this.id;
     }
     
     

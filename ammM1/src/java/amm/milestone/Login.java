@@ -6,7 +6,10 @@
 package amm.milestone;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,9 +21,29 @@ import javax.servlet.http.HttpSession;
  *
  * @author Carlo
  */
-@WebServlet(name = "Login", urlPatterns = {"/login.html"})
+//@WebServlet(name = "Login", urlPatterns = {"/login.html"})
+@WebServlet(name = "Login", urlPatterns = {"/login.html"}, loadOnStartup = 0 )
 public class Login extends HttpServlet {
+    private static final String JDBC_DRIVER = "org.apache.derby.jdbc.EmbeddedDriver";
+    private static final String DB_CLEAN_PATH = "../../web/WEB-INF/db/ammdb";
+    private static final String DB_BUILD_PATH = "WEB-INF/db/ammdb";
 
+    @Override 
+    public void init(){
+        String dbConnection = "jdbc:derby:" + this.getServletContext().getRealPath("/") + DB_BUILD_PATH;
+        //String dbConnection = "jdbc:derby:" + this.getServletContext().getRealPath("/") + DB_CLEAN_PATH;
+        //System.out.println(dbConnection);
+        
+        try {
+            Class.forName(JDBC_DRIVER);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        ClienteFactory.getInstance().setConnectionString(dbConnection);
+        VenditoreFactory.getInstance().setConnectionString(dbConnection);
+        TennisObjectSaleFactory.getInstance().setConnectionString(dbConnection);
+
+    }
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -52,8 +75,10 @@ public class Login extends HttpServlet {
                 String password = request.getParameter("Password");
 
                 //carico la lista degli oggetti
-                ArrayList<TennisObjectSale> listaOggetti = TennisObjectSaleFactory.getInstance().getOggettiList();
-
+                //ArrayList<TennisObjectSale> listaOggetti = TennisObjectSaleFactory.getInstance().getOggettiList();
+                ArrayList<TennisObjectSale> listaOggetti = null;
+                        
+                /*
                 //carico la lista dei clienti con il quale controllare user e psw
                 ArrayList<Cliente> listaClienti = ClienteFactory.getInstance().getClientiList();
                 for (Cliente u : listaClienti){
@@ -70,7 +95,87 @@ public class Login extends HttpServlet {
                         //rimando a cliente.html che sarà letto dalla servlet
                     }               
                 }
-
+                */
+                
+                Cliente c = ClienteFactory.getInstance().getCliente(username, password);
+                
+                //LEGGO L'ECCEZIONE GENERATA
+                if (c != null && c.getNome().substring(0, 4).equals("java")){
+                    try (PrintWriter out = response.getWriter()) {
+                        out.println("<!DOCTYPE html>");
+                        out.println("<html>");
+                        out.println("<head>");
+                        out.println("<title>Servlet NewServlet</title>");            
+                        out.println("</head>");
+                        out.println("<body>");
+                        out.println("<h1>Servlet NewServlet at " + request.getContextPath() + "</h1>");
+                        out.println(c.getNome());
+                        out.println("</body>");
+                        out.println("</html>");
+                    }
+                }
+                
+                if (c != null){ //trovato il cliente
+                    listaOggetti = TennisObjectSaleFactory.getInstance().getOggettiListFromDatabse();
+                    session.setAttribute("loggedIn", true); //un generico utente si è loggato, potrebbe servirmi
+                    session.setAttribute("clienteLoggedIn", true);//un cliente si è loggato
+                    autenticazioneRiuscita=true;
+                    session.setAttribute("id", c.getCodiceFiscale()); //variabile di sessione
+                    session.setAttribute("cliente", c);//metto nell'attributo "cliente" della sessione i dati del cliente loggato
+                    request.setAttribute("cliente", c);//metto nell'attributo "cliente" i dati del cliente loggato
+                    session.setAttribute("oggetti", listaOggetti);//metto in "oggetti" la lista degli oggetti
+                    //request.getRequestDispatcher("cliente.jsp").forward(request, response);
+                    response.sendRedirect("cliente.html");
+                    //rimando a cliente.html che sarà letto dalla servlet
+                }
+                /*
+                else {
+                    try (PrintWriter out = response.getWriter()) {
+                        out.println("<!DOCTYPE html>");
+                        out.println("<html>");
+                        out.println("<head>");
+                        out.println("<title>Servlet NewServlet</title>");            
+                        out.println("</head>");
+                        out.println("<body>");
+                        out.println("<h1>Servlet NewServlet at " + request.getContextPath() + "</h1>");
+                        out.println("c è null");
+                        out.println("</body>");
+                        out.println("</html>");
+                    }
+                }*/
+                
+                Venditore v = VenditoreFactory.getInstance().getVenditore(username, password);
+                
+                //LEGGO L'ECCEZIONE GENERATA
+                if (v != null && v.getNome().substring(0, 4).equals("java")){
+                    try (PrintWriter out = response.getWriter()) {
+                        out.println("<!DOCTYPE html>");
+                        out.println("<html>");
+                        out.println("<head>");
+                        out.println("<title>Servlet NewServlet</title>");            
+                        out.println("</head>");
+                        out.println("<body>");
+                        out.println("<h1>Servlet NewServlet at " + request.getContextPath() + "</h1>");
+                        out.println(v.getNome());
+                        out.println("</body>");
+                        out.println("</html>");
+                    }
+                }
+                
+                if (v!=null){ //trovato il venditore
+                    listaOggetti = VenditoreFactory.getInstance().getOggettiListByVenditoreID(v.getId());
+                    session.setAttribute("loggedIn", true);
+                    session.setAttribute("venditoreLoggedIn", true);
+                    autenticazioneRiuscita=true;
+                    session.setAttribute("id", v.getId());
+                    session.setAttribute("oggetti", listaOggetti);//metto in "oggetti" la lista degli oggetti
+                    request.setAttribute("venditore", v);
+                    session.setAttribute("venditore", v);
+                    //request.getRequestDispatcher("venditore.html").forward(request, response);
+                    response.sendRedirect("venditore.html");
+                }
+                
+                /*
                 //carico la lista dei venditori con il quale controllare user e psw
                 //stesso funzionamento del caso del cliente
                 ArrayList<Venditore> listaVenditori = VenditoreFactory.getInstance().getVenditoriList();
@@ -86,6 +191,7 @@ public class Login extends HttpServlet {
                         response.sendRedirect("venditore.html");
                     }               
                 }
+                */
 
                 //se sono qua è perché l'autenticazione è fallita e non c'è stata alcuna redirezione verso le pagine del cliente/venditore
                 if (autenticazioneRiuscita==false){

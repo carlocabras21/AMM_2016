@@ -16,6 +16,10 @@ public class Saldo {
         saldo=new Double(0);
     }
 
+    Saldo(double saldo) {
+        this.saldo = saldo;
+    }
+
     /**
      * @return the saldo
      */

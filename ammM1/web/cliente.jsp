@@ -130,6 +130,7 @@
                     </c:when>
                     <c:when test="${param['confermato'] == false}"> <!-- se è false, stampo un messaggio d'errore -->
                         <p>Acquisto non completato, il tuo saldo non &egrave; sufficiente.</p>
+                        <a href="cliente.html">Torna alla pagina dedicata al cliente</a>
                     </c:when>
                     <c:otherwise>
                         <div class="content">
@@ -164,8 +165,6 @@
                     </c:otherwise>
                 </c:choose>
                 
-                    
-                    
             </c:otherwise>
             
         </c:choose>

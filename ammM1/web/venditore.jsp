@@ -148,6 +148,37 @@
                         </div>
                     </form>
                 </div>
+                
+                <p> La lista dei tuoi oggetti: </p>
+                <table>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Foto</th>
+                        <th>Quantit&agrave; disponibile</th>
+                        <th>Prezzo</th>
+                        <th>Modifica</th>
+                    </tr>
+
+                    <c:forEach var="oggetto" items="${oggetti}">
+                        <tr>
+                            <td>${oggetto.getNome()}</td>
+                            <td>
+                                <img title="${oggetto.getNome()}" 
+                                     alt="${oggetto.getNome()}" 
+                                     src="${oggetto.getUrlImmagine()}" 
+                                     width="100" height="100">
+                            </td>
+                            <td>${oggetto.getQuantitaDisponibile()}</td>
+                            <td>${oggetto.getPrezzo()}</td>
+                            <td>
+                                <!--
+                                <a href="cliente.jsp?id=${oggetto.getId()}&nome=${oggetto.getNome()}&img=${oggetto.getUrlImmagine()}&prezzo=${oggetto.getPrezzo()}"> Aggiungi al carrello </a>
+                                -->
+                                <a href="#">null</a>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </table>
             </div>
             </c:otherwise>
         </c:choose>

@@ -89,8 +89,18 @@ public class VenditoreServlet extends HttpServlet {
             }
             
             //se oggettoAggiunto è true vuol dire che non ci sono stati errori nell'invio dei dati, posso salvare l'oggetto
-            if ((boolean)request.getAttribute("oggettoAggiunto")==true)
+            if ((boolean)request.getAttribute("oggettoAggiunto")==true){
                 request.setAttribute("nuovoOggetto", nuovoOggetto);
+                
+                //aggiungo l'oggetto venduto alla lista presente in sessione, così da poterla stampare per intero dopo
+                VenditoreFactory.getInstance().addObjectToList(nuovoOggetto);
+                Venditore v = (Venditore)session.getAttribute("venditore");
+                session.setAttribute("oggetti", VenditoreFactory.getInstance().getOggettiListByVenditoreID(v.getId()));
+                
+                // ---------- AGGIUNTA AL DATABASE -------------------
+                VenditoreFactory.getInstance().addObjectToDatabase(nuovoOggetto, v.getId());
+                
+            }
         }
         
         //nessun bottone è stato premuto, rimando semplicemente a venditore.jsp

@@ -12,6 +12,11 @@ Singleton: https://it.wikipedia.org/wiki/Singleton
  */
 package amm.milestone;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -26,6 +31,7 @@ public class TennisObjectSaleFactory {
     
     // Attributi
     private static TennisObjectSaleFactory singleton;
+    String connectionString;
     ArrayList<TennisObjectSale> listaOggetti = new ArrayList<TennisObjectSale>();
     
     public static TennisObjectSaleFactory getInstance() {
@@ -82,8 +88,54 @@ public class TennisObjectSaleFactory {
         listaOggetti.add(oggetto5);
     }
     
-    public ArrayList<TennisObjectSale> getOggettiList()
-    {
+    public ArrayList<TennisObjectSale> getOggettiList(){
+        return listaOggetti;
+    }
+    
+    public ArrayList<TennisObjectSale> getOggettiListFromDatabse(){
+        listaOggetti = new ArrayList<TennisObjectSale>();
+        
+        try {
+            // Mi connetto al database
+            Connection conn = DriverManager.getConnection(connectionString, "carlocabras", "0");
+            
+            // Preparo la query con cui ricerco tutti i clienti e filtro per usr e psw
+            String queryRicerca = "select * from oggetto";
+            PreparedStatement stmt = conn.prepareStatement(queryRicerca);
+            
+            // Mando in esecuzione la query
+            ResultSet res = stmt.executeQuery();
+            
+            // In set ci deve essere un solo elemento (cliente) associato a quell'username e password. Mi assicuro che ci sia
+            while(res.next()) {
+                // Creo un nuovo Cliente, da valorizzare e poi restituire
+                TennisObjectSale c = new TennisObjectSale();
+                c.setId(res.getInt("id"));
+                c.setNome(res.getString("nome"));
+                c.setDescrizione(res.getString("descrizione"));
+                c.setUrlImmagine(res.getString("url_immagine"));
+                c.setQuantitaDisponibile(res.getInt("quantita"));
+                c.setPrezzo(res.getDouble("prezzo"));
+                
+                listaOggetti.add(c);
+            }
+            
+            stmt.close();
+            conn.close();
+            
+        } catch(SQLException e) {
+            System.out.println("__________________________________________________");
+            System.out.println("__________________________________________________");
+            System.out.println("__________________________________________________");
+            System.out.println(e.toString()+"_________");
+            for (Throwable s : e.getNextException()) {
+                System.out.println(s.toString() + "_________________________");
+            }
+            System.out.println("__________________________________________________");
+            System.out.println("__________________________________________________");
+            System.out.println("__________________________________________________");
+        }
+        
         return listaOggetti;
     }
     
@@ -95,4 +147,11 @@ public class TennisObjectSaleFactory {
         return null;
     }
     
+    public void setConnectionString(String s){
+	this.connectionString = s;
+    }
+    
+    public String getConnectionString(){
+        return this.connectionString;
+    } 
 }

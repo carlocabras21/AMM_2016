@@ -1,0 +1,36 @@
+ENTITA'
+
+Cliente:
+	username: stringa
+	password: stringa
+	id: intero
+	nome: stringa
+	cognome: stringa
+	codice fiscale: stringa
+	data di nascita: data
+	saldo: double
+
+Venditore
+	username: stringa
+	password: stringa
+	id: intero
+	nome: stringa
+	cognome: stringa
+	codice fiscale: stringa
+	data di nascita: data
+	saldo: double
+
+
+Oggetto
+	id: intero
+	nome: stringa
+	descrizione: stringa
+	url immagine: stringa
+	quantita: intero
+	prezzo: double
+
+------------------------------------
+
+RELAZIONI:
+venditore 1:n oggetto
+

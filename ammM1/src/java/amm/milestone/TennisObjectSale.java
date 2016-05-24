@@ -1,7 +1,5 @@
 package amm.milestone;
 
-import java.util.List;
-
 /**
  *
  * @author Carlo

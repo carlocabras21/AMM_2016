@@ -46,6 +46,10 @@ public class ClienteServlet extends HttpServlet {
             //se il cliente esiste (dovrebbe esistere in quanto se sta comprando è perché è loggato) ed ha abbastanza soldi
             if (cliente!=null && cliente.getSaldo().getSaldo() > prezzo){
                 //conferma acquisto
+                TennisObjectSale o = new TennisObjectSale();
+                o.setId(Integer.parseInt((String)request.getParameter("id")));
+                
+                ClienteFactory.getInstance().compra(prezzo, cliente);
                 
                 //invio alla pagina compra.jsp i dati dell'acquisto così si può mostrare un riepilogo
                 request.getRequestDispatcher("cliente.jsp?confermato=true&nome="+
