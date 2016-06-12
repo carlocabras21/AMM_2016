@@ -14,7 +14,7 @@
     http://codicicolori.com/codici-colori-rgb
 */
 
-a:link, a:visited{
+.content a:link, a:visited{
     color: #162127; 
 }
 a:hover{
@@ -200,16 +200,40 @@ aside{
     height: 75%;
 }
 
+
+.error{
+    color: #FF0000;
+    font-weight: bold;
+}
+
 .sezioneLateraleDestra{
     float: right;
 }
 .sezioneLateraleSinistra{
     float: left;
+    padding-left: 0;
 }
 
-.error{
-    color: #FF0000;
-    font-weight: bold;
+.sezioneLateraleDestra>h2{
+    color: whitesmoke;
+}
+
+.sezioneLateraleDestra>a{
+    color: white;
+}
+
+.sezioneLateraleDestra a:link, a:visited{
+    color: whitesmoke; 
+}
+
+.barraRicerca{
+    width: 50%;
+    align-content: center;
+    margin-left: 25%;
+}
+
+#etichettaRicerca{
+    margin-left: 48%;
 }
 
 footer{ 

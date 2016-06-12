@@ -34,8 +34,8 @@
         <jsp:include page="sezionelaterale.jsp" />
         
         <!--
-        passo il parametro "autenticazioneFallita" tramite url e nel caso fosse true allora
-        stampo messaggio d'errore
+            passo il parametro "autenticazioneFallita" tramite url e nel caso fosse true allora
+            stampo messaggio d'errore
         -->
         <c:if test="${param['autenticazioneFallita'] == true}">
             <div class="error">

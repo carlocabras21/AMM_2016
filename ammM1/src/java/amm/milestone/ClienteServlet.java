@@ -7,6 +7,9 @@ package amm.milestone;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -37,34 +40,35 @@ public class ClienteServlet extends HttpServlet {
         HttpSession session = request.getSession(false);
         
         if(request.getParameter("Submit") != null){
-            //recupero il prezzo per controllare se il cliente ha abbastanza soldi
-            double prezzo = Double.parseDouble(request.getParameter("prezzo"));
+            //prendo l'id dell'oggetto passatomi
+            int idOggetto = Integer.parseInt(request.getParameter("id"));
+            
+            //recupero l'oggetto da comprare
+            TennisObjectSale oggettoDaComprare = TennisObjectSaleFactory.getInstance().getOggetto(idOggetto);
             
             //recupero il cliente dalla sessione
             Cliente cliente = (Cliente)session.getAttribute("cliente");
            
             //se il cliente esiste (dovrebbe esistere in quanto se sta comprando è perché è loggato) ed ha abbastanza soldi
-            if (cliente!=null && cliente.getSaldo().getSaldo() > prezzo){
+            if (cliente!=null && cliente.getSaldo().getSaldo() > oggettoDaComprare.getPrezzo()){
                 //conferma acquisto
-                TennisObjectSale o = new TennisObjectSale();
-                o.setId(Integer.parseInt((String)request.getParameter("id")));
-                
-                ClienteFactory.getInstance().compra(prezzo, cliente);
-                
-                //invio alla pagina compra.jsp i dati dell'acquisto così si può mostrare un riepilogo
-                request.getRequestDispatcher("cliente.jsp?confermato=true&nome="+
-                                              request.getParameter("nome")+"&img="+
-                                              request.getParameter("img")+"&prezzo="+
-                                              request.getParameter("prezzo")).forward(request, response);
+                if (ClienteFactory.getInstance().acquisto(oggettoDaComprare, cliente)){
+                    //invio alla pagina compra.jsp i dati dell'acquisto così si può mostrare un riepilogo
+                    response.sendRedirect("cliente.jsp?confermato=true&nome="+oggettoDaComprare.getNome()+"&img="+oggettoDaComprare.getUrlImmagine()+"&prezzo="+oggettoDaComprare.getPrezzo());
+                    cliente.setSaldo(new Saldo(cliente.getSaldo().getSaldo() - oggettoDaComprare.getPrezzo()));
+                    session.setAttribute("cliente", cliente);
+                    session.setAttribute("oggetti", TennisObjectSaleFactory.getInstance().getOggettiListFromDatabse());
+                }
+                else 
+                    response.sendRedirect("cliente.jsp?confermato=false");
             }
             else { //nega acquisto
                 //invio alla pgina compra.jsp il parameotro "confermato" settato a false per segnalare l'errore
-                request.getRequestDispatcher("cliente.jsp?confermato=false").forward(request, response);
+                response.sendRedirect("cliente.jsp?confermato=false");
             }
         }
-        
-        //non è stato premuto alcun submit di conferma, semplicemente rimando a cliente.jsp
-        request.getRequestDispatcher("cliente.jsp").forward(request, response);//rimando a cliente.jsp
+        else //non è stato premuto alcun submit di conferma, semplicemente rimando a cliente.jsp
+            request.getRequestDispatcher("cliente.jsp").forward(request, response);//rimando a cliente.jsp
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

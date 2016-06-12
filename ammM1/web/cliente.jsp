@@ -3,31 +3,10 @@
     Created on : 23-apr-2016, 16.51.41
     Author     : Carlo
 
-    Descrizione: questa pagina contiene tutte le operazioni che un cliente può effettuare, come acquistare un oggetto.
-                 Contiene anche i messaggi di errore nel caso di autenticazione non effettuata o fallita (nel caso fosse
-                 loggato un venditore)
-                 
-                 non mi fa inserire commenti all'interno del <c:choose>, li scriverò tutti qua
-                 
-                 riga 62:
-                    Uso il parametro "id" passato via URL e, nel caso esso esista, vuol dire che l'utente
-                    ha premuto su "Aggiungi al carrello e stampo un riepilogo dell'oggetto.
-                    Tutti i dati per stampare il riepilogo sono passati via URL.
-                
-                riga 98:
-                    form invio oggetti
-                    tramite hidden field spedisco i dati alla servlet
-                    
-                riga 112:
-                    qua siamo nel caso base, nessun'acuqisto è stato anoora effettuato e il cliente è loggato.
-                    Mostro la tabella degli oggetti
-                
-                riga 135:
-                    rimando alla stessa pagina passando i dati dell'oggetto da acquistare
-
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -37,6 +16,8 @@
         <meta name="author" content="Carlo Cabras">
         <meta name="keywords" content="tennis, shop">
         <link rel="stylesheet" type="text/css" href="style.css" media="screen">
+        <script src="js/jquery-2.2.4.min.js"></script>
+        <script src="js/javascript.js"></script>
     </head>
     
         <header>
@@ -52,7 +33,7 @@
         <jsp:include page="sezionelaterale.jsp" />
         <!--
             Uso il parametro passato via URL "clienteLoggedIn" che può avere 3 valori:
-            - true: l'autenticazione del cliente è andata a buob fine
+            - true: l'autenticazione del cliente è andata a buon fine
             - false: si è autenticato un venditore, in quanto al momento del login setto questa variabile a false
             - null: non si è autenticato nessuno
         -->
@@ -74,7 +55,6 @@
             <c:otherwise>
                 
                 <c:choose>
-                   
                     <c:when test="${param['id'] != null}">
                         <div class="content">
                             <h3>Riepilogo oggetto:</h3>
@@ -96,11 +76,9 @@
                                     <td>${param['prezzo']}</td>
                                     <td>
                                         <form method="POST" action="cliente.html">
-                                            <input type="hidden" name="nome" value="${param['nome']}">
-                                            <input type="hidden" name="img" value="${param['img']}">
-                                            <input type="hidden" name="prezzo" value="${param['prezzo']}">
+                                            <input type="hidden" name="id" value="${param['id']}">
                                             <input type="submit" name="Submit" value="Conferma">
-                                      </form>
+                                        </form>
 
                                     </td>
                                 </tr>
@@ -127,15 +105,19 @@
                                 <td>${param['prezzo']}</td>
                             </tr>
                         </table>
+                        <a href="cliente.html">Torna alla pagina dedicata al cliente</a>
                     </c:when>
                     <c:when test="${param['confermato'] == false}"> <!-- se è false, stampo un messaggio d'errore -->
                         <p>Acquisto non completato, il tuo saldo non &egrave; sufficiente.</p>
                         <a href="cliente.html">Torna alla pagina dedicata al cliente</a>
                     </c:when>
-                    <c:otherwise>
+                    <c:otherwise> <!-- caso base: stampa tabella oggetti -->
                         <div class="content">
-                            <p> Puoi scegliere che oggetto aggiungere al carrello per poi comprarlo. </p>
-                            <table>
+                            
+                            <label for="Filtra" id="etichettaRicerca">Ricerca</label>
+                            <input class="barraRicerca" type="text" name="Filtra" id="Ricerca"/>
+                            <div class="error" id="messaggioErrore"></div>
+                            <table id="tabellaOggetti" class="tabellaOggetti">
                                 <tr>
                                     <th>Nome</th>
                                     <th>Foto</th>

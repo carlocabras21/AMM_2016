@@ -18,6 +18,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -94,36 +96,28 @@ public class TennisObjectSaleFactory {
     
     public ArrayList<TennisObjectSale> getOggettiListFromDatabse(){
         listaOggetti = new ArrayList<TennisObjectSale>();
-        
-        try {
-            // Mi connetto al database
-            Connection conn = DriverManager.getConnection(connectionString, "carlocabras", "0");
-            
-            // Preparo la query con cui ricerco tutti i clienti e filtro per usr e psw
-            String queryRicerca = "select * from oggetto";
-            PreparedStatement stmt = conn.prepareStatement(queryRicerca);
-            
-            // Mando in esecuzione la query
-            ResultSet res = stmt.executeQuery();
-            
-            // In set ci deve essere un solo elemento (cliente) associato a quell'username e password. Mi assicuro che ci sia
-            while(res.next()) {
-                // Creo un nuovo Cliente, da valorizzare e poi restituire
-                TennisObjectSale c = new TennisObjectSale();
-                c.setId(res.getInt("id"));
-                c.setNome(res.getString("nome"));
-                c.setDescrizione(res.getString("descrizione"));
-                c.setUrlImmagine(res.getString("url_immagine"));
-                c.setQuantitaDisponibile(res.getInt("quantita"));
-                c.setPrezzo(res.getDouble("prezzo"));
-                
-                listaOggetti.add(c);
+
+        try (Connection conn = DriverManager.getConnection(connectionString, "carlocabras", "0")) { // Mi connetto al database           
+            try (PreparedStatement stmt = conn.prepareStatement("select * from oggetto")) { // preparo la query
+                // Mando in esecuzione la query
+                ResultSet res = stmt.executeQuery();
+
+                // In set ci deve essere un solo oggetto
+                while(res.next()) {
+                    // Creo un nuovo oggetto, da valorizzare e poi restituire
+                    TennisObjectSale c = new TennisObjectSale();
+                    c.setId(res.getInt("id"));
+                    c.setNome(res.getString("nome"));
+                    c.setDescrizione(res.getString("descrizione"));
+                    c.setUrlImmagine(res.getString("url_immagine"));
+                    c.setQuantitaDisponibile(res.getInt("quantita"));
+                    c.setPrezzo(res.getDouble("prezzo"));
+
+                    listaOggetti.add(c);
+                }
             }
-            
-            stmt.close();
-            conn.close();
-            
-        } catch(SQLException e) {
+        }
+        catch(SQLException e) {
             System.out.println("__________________________________________________");
             System.out.println("__________________________________________________");
             System.out.println("__________________________________________________");
@@ -147,6 +141,108 @@ public class TennisObjectSaleFactory {
         return null;
     }
     
+    TennisObjectSale getOggettoFromDatabase(int id){
+        TennisObjectSale c = null;
+        
+        try (Connection conn = DriverManager.getConnection(connectionString, "carlocabras", "0")) { // Mi connetto al database
+            // Preparo la query con cui ricerco l'oggetto con quel id
+            String queryRicerca = "select * from oggetto where id=?";
+            try (PreparedStatement stmt = conn.prepareStatement(queryRicerca)) {
+                stmt.setInt(1, id);
+
+                // Mando in esecuzione la query
+                ResultSet res = stmt.executeQuery();
+
+                // In set ci deve essere un solo oggetto
+                if(res.next()) {
+                    // Creo un nuovo oggetto, da valorizzare e poi restituire
+                    c = new TennisObjectSale();
+                    c.setId(res.getInt("id"));
+                    c.setNome(res.getString("nome"));
+                    c.setDescrizione(res.getString("descrizione"));
+                    c.setUrlImmagine(res.getString("url_immagine"));
+                    c.setQuantitaDisponibile(res.getInt("quantita"));
+                    c.setPrezzo(res.getDouble("prezzo"));
+                }
+            }
+        }
+        catch(SQLException e) {
+            System.out.println("__________________________________________________");
+            System.out.println("__________________________________________________");
+            System.out.println("__________________________________________________");
+            System.out.println(e.toString()+"_________");
+            for (Throwable s : e.getNextException()) {
+                System.out.println(s.toString() + "_________________________");
+            }
+            System.out.println("__________________________________________________");
+            System.out.println("__________________________________________________");
+            System.out.println("__________________________________________________");
+            
+            return null;
+        }
+        
+        return c;
+    
+    }
+    
+    boolean modificaOggetto(TennisObjectSale nuovoOggetto){
+        Connection conn = null;
+        try {
+            conn = DriverManager.getConnection(connectionString, "carlocabras", "0");
+            
+            // aggiorno i dati dell'oggetto
+            String query = "UPDATE oggetto SET nome=?, descrizione=?, url_immagine=?, quantita=?, prezzo=? WHERE id = ?";
+            try (PreparedStatement stmt = conn.prepareStatement(query)) {
+                stmt.setString(1, nuovoOggetto.getNome());
+                stmt.setString(2, nuovoOggetto.getDescrizione());
+                stmt.setString(3, nuovoOggetto.getUrlImmagine());
+                stmt.setInt(4, nuovoOggetto.getQuantitaDisponibile());
+                stmt.setDouble(5, nuovoOggetto.getPrezzo());
+                stmt.setInt(6, nuovoOggetto.getId());
+                
+                // Mando in esecuzione la query
+                if(stmt.executeUpdate()!=1){
+                    conn.rollback();
+                    return false;
+                }
+            }
+            
+        } catch (SQLException e) {
+            System.out.println("__________________________________________________");
+            System.out.println("__________________________________________________");
+            System.out.println("__________________________________________________");
+            System.out.println(e.toString()+"_________");
+            for (Throwable s : e.getNextException()) {
+                System.out.println(s.toString() + "_________________________");
+            }
+            System.out.println("__________________________________________________");
+            System.out.println("__________________________________________________");
+            System.out.println("__________________________________________________");
+            
+            if (conn != null){
+                try {
+                    conn.rollback();
+                } catch (SQLException ex) {
+                    Logger.getLogger(ClienteFactory.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            
+            System.out.println("__________________________________________________");
+            System.out.println("__________________________________________________");
+            System.out.println("__________________________________________________");
+            System.out.println(e.toString()+"_________");
+            for (Throwable s : e.getNextException()) 
+                System.out.println(s.toString() + "_________________________");
+            System.out.println("__________________________________________________");
+            System.out.println("__________________________________________________");
+            System.out.println("__________________________________________________");
+            
+            return false;
+            
+        }
+        return true;
+    }
+    
     public void setConnectionString(String s){
 	this.connectionString = s;
     }
@@ -154,4 +250,45 @@ public class TennisObjectSaleFactory {
     public String getConnectionString(){
         return this.connectionString;
     } 
+
+    ArrayList<TennisObjectSale> getOggetti(String text) {
+        listaOggetti = new ArrayList();
+        
+        try (Connection conn = DriverManager.getConnection(connectionString, "carlocabras", "0");) { // Mi connetto al database
+            String queryRicerca = "SELECT * FROM oggetto WHERE upper(nome) LIKE ?"; // Preparo la query con cui ricerco tutti gli oggetti
+            try (PreparedStatement stmt = conn.prepareStatement(queryRicerca)) {
+                text = "%"+text.toUpperCase()+"%";
+                stmt.setString(1, text);
+                
+                ResultSet res = stmt.executeQuery(); // Mando in esecuzione la query
+                while (res.next()) {
+                    // Creo un nuovo oggetto, da valorizzare e aggiungere alla lista
+                    TennisObjectSale c = new TennisObjectSale();
+                    c.setId(res.getInt("id"));
+                    c.setNome(res.getString("nome"));
+                    c.setDescrizione(res.getString("descrizione"));
+                    c.setUrlImmagine(res.getString("url_immagine"));
+                    c.setQuantitaDisponibile(res.getInt("quantita"));
+                    c.setPrezzo(res.getDouble("prezzo"));
+                    
+                    listaOggetti.add(c);
+                }
+            }
+            
+        } catch(SQLException e) {
+            System.out.println("__________________________________________________");
+            System.out.println("__________________________________________________");
+            System.out.println("__________________________________________________");
+            System.out.println(e.toString()+"_________");
+            for (Throwable s : e.getNextException()) {
+                System.out.println(s.toString() + "_________________________");
+            }
+            System.out.println("__________________________________________________");
+            System.out.println("__________________________________________________");
+            System.out.println("__________________________________________________");
+        }
+        if (listaOggetti.size()>0)
+            return listaOggetti; 
+        return null;
+    }
 }

@@ -9,15 +9,10 @@
             30000
         </session-timeout>
     </session-config>
-    <!--
-    <servlet> 
-        <servlet-name>Login</servlet-name> 
-        <servlet-class>amm.milestone.Login</servlet-class> 
-        <load-on-startup>0</load-on-startup> 
-    </servlet>     
-    -->
+   
     <welcome-file-list>
         <welcome-file>descrizione.jsp</welcome-file>
     </welcome-file-list>
 </web-app>
 
+      
