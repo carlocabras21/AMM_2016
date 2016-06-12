@@ -3,30 +3,6 @@
     Created on : 23-apr-2016, 16.52.06
     Author     : Carlo
 
-    Desciriozne: contiene le operazioni effettuabili da un venditore, ovvero aggiungere un oggetto.
-                 pagina divisa in più parti:
-                 - messaggi di errore nel caso di autenticazoine non effettuata/fallita (si è loggato un utente)
-                 - riepilogo oggetto aggiunto
-                 - form inserimento nuovo oggetto
-                 
-                 non mi fa scrivere commenti all'interno del <c:choose>, li scriverò qua:
-                 
-                 riga 59:
-                    Uso il parametro passato via URL "venditoreLoggedIn" che può avere 3 valori:
-                    - true: l'autenticazione del cliente è andata a buob fine
-                    - false: si è autenticato un cliente, in quanto al momento del login setto questa variabile a false
-                    - null: non si è autenticato nessuno
-                
-                riga 74:
-                    Uso il parametro "oggettoAggiunto" per stampare il riepilogo dell'oggetto nel caso esso sia true
-
-                riga 100:
-                    form invio nuovo oggetto
-
-                riga 107 in poi:
-                    Uso il parametro "<attributo>Sbagliato" per segnalare all'utente il caso in cui esso inserisca
-                    un campo in un formato sbagliato
-
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -55,14 +31,13 @@
         </header>
         
         <jsp:include page="sezionelaterale.jsp" />
-                
+        <!--
+            Uso il parametro passato via URL "venditoreLoggedIn" che può avere 3 valori:
+               - true: l'autenticazione del venditore è andata a buon fine
+               - false: si è autenticato un venditore, in quanto al momento del login setto questa variabile a false
+               - null: non si è autenticato nessuno
+       -->  
         <c:choose>
-            <!--
-                 Uso il parametro passato via URL "venditoreLoggedIn" che può avere 3 valori:
-                    - true: l'autenticazione del venditore è andata a buon fine
-                    - false: si è autenticato un venditore, in quanto al momento del login setto questa variabile a false
-                    - null: non si è autenticato nessuno
-            -->
             <c:when test="${sessionScope['venditoreLoggedIn'] == null}">
                 <div class="content">
                     <div class="error">
@@ -154,7 +129,7 @@
                     </form>          
                     </div>
                 </c:when> 
-            <c:when test="${param['eliminazioneConfermata'] == true}"> <!-- se è true, stampo il riepilogo dell'oggetto -->
+            <c:when test="${param['eliminazioneConfermata'] == true}">
                 <div class="content">
                 <p>Eliminazione CONFERMATA!</p>
                 <h3>Riepilogo oggetto ELIMINATO:</h3>
@@ -178,7 +153,7 @@
                 <a href="venditore.html">Torna alla pagina dedicata al venditore</a>
                 </div>
             </c:when>
-            <c:when test="${param['eliminazioneConfermata'] == false}"> <!-- se è false, stampo messaggio d'errore -->
+            <c:when test="${param['eliminazioneConfermata'] == false}">
                 <p>Non &egrave; stato possibile eliminare l'oggetto.</p>
                 <a href="venditore.html">Torna alla pagina dedicata al venditore</a>
             </c:when>

@@ -257,7 +257,7 @@ public class TennisObjectSaleFactory {
         try (Connection conn = DriverManager.getConnection(connectionString, "carlocabras", "0");) { // Mi connetto al database
             String queryRicerca = "SELECT * FROM oggetto WHERE upper(nome) LIKE ?"; // Preparo la query con cui ricerco tutti gli oggetti
             try (PreparedStatement stmt = conn.prepareStatement(queryRicerca)) {
-                text = "%"+text.toUpperCase()+"%";
+                text = "%" + text.toUpperCase() + "%";
                 stmt.setString(1, text);
                 
                 ResultSet res = stmt.executeQuery(); // Mando in esecuzione la query

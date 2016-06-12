@@ -85,7 +85,7 @@
                             </table>
                         </div>
                     </c:when> 
-                    <c:when test="${param['confermato'] == true}"> <!-- se è true, stampo il riepilogo dell'oggetto -->
+                    <c:when test="${param['confermato'] == true}"> 
                         <p>Acquisto CONFERMATO!</p>
                         <h3>Riepilogo oggetto:</h3>
                         <table>
@@ -111,7 +111,7 @@
                         <p>Acquisto non completato, il tuo saldo non &egrave; sufficiente.</p>
                         <a href="cliente.html">Torna alla pagina dedicata al cliente</a>
                     </c:when>
-                    <c:otherwise> <!-- caso base: stampa tabella oggetti -->
+                    <c:otherwise> 
                         <div class="content">
                             
                             <label for="Filtra" id="etichettaRicerca">Ricerca</label>
